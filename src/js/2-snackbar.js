@@ -3,31 +3,29 @@ import "izitoast/dist/css/iziToast.min.css";
 
 const form = document.querySelector(`.form`);
 const delayInput = document.querySelector('input[name="delay"]');
-const button = document.querySelector(`button[type="submit"]`);
-const checkBox = document.querySelector('input[name="state"]:checked');
 
 form.addEventListener(`submit`, event => {
     event.preventDefault();
     let delay = Number(delayInput.value);
 
-    const state = form.querySelector('input[name="state"]:checked');
+    const stateValue = form.querySelector('input[name="state"]:checked').value;
 
     const promise = new Promise ((resolve, reject) => {
         setTimeout(() => {
 
-            if ('fulfilled' === event.target.state.value) {
-                resolve(`Fulfilled promise in ${delay}ms`);
+            if ('fulfilled' === stateValue) {
+                resolve(delay);
             } else {
-                reject(`Rejected promise in ${delay}ms`);
+                reject(delay);
             }
         }, delay);
     })
 
 
     promise
-       .then(message => {
+       .then(delay => {
            iziToast.show({
-               message: message,
+               message: `Fulfilled promise in ${delay}ms`,
 
                position: 'topRight',
                maxWidth: 383,
@@ -46,9 +44,9 @@ form.addEventListener(`submit`, event => {
 
            });
         })
-       .catch(error => {
+       .catch(delay => {
            iziToast.show({
-              message: error,
+              message: `Rejected promise in ${delay}ms`,
               position: 'topRight',
               maxWidth: 383,
               backgroundColor: '#ef4040',

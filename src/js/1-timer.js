@@ -41,7 +41,7 @@ const options = {
       if (userSelectedDate > new Date()) {
         console.log(userSelectedDate);
         buttonStart.disabled = false;
-        timer.start(userSelectedDate);
+       
 
       } else {
         iziToast.show({
@@ -87,6 +87,8 @@ class Timer {
 
         this.targetTime = targetDate.getTime();
         this.isActive = true;
+        
+        inputDate.disabled = true;
 
         this.intervalId = setInterval(() => {
             const currentTime = Date.now();
@@ -102,6 +104,7 @@ class Timer {
                     this.onComplete();
                 }
                 buttonStart.disabled = true;
+                inputDate.disabled = false;
                 return;
             }
         }, 1000)
